@@ -21,4 +21,12 @@ class Project extends Model
         return $this->belongsToMany(Technology::class);
     }
 
+    public function getTechBadges()
+    {
+        $badges_html = "";
+        foreach ($this->technologies as $technology) {
+            $badges_html .= "<span class='badge rouded-pill mx-1' style='background-color:{$technology->color}'>{$technology->label}</span>";
+        }
+        return $badges_html;
+    }
 }

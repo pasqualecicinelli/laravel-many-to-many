@@ -28,7 +28,9 @@ class UpdateProjectRequest extends FormRequest
             'repo' => ['required', 'string', 'max:50'],
             'link' => ['required', 'url',],
             'description' => ['nullable', 'string'],
-            'type_id' => ['nullable', 'exists:types,id']
+            'type_id' => ['nullable', 'exists:types,id'],
+            'technologies' => ['nullable', 'exists:technologies,id'],
+
 
         ];
     }
@@ -49,7 +51,10 @@ class UpdateProjectRequest extends FormRequest
 
             'description.string' => 'La descrizione deve essere una stringa',
 
-            'type_id.exists' => 'La parte di sviluppo scelta non è valida'
+            'type_id.exists' => 'La parte di sviluppo scelta non è valida',
+
+            'technologies.exists' => 'Le parti di tecnologie scelte non sono valide',
+
 
         ];
     }
