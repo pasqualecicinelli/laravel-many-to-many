@@ -7,9 +7,11 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use App\Models\Type;
+use App\Models\Technology;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 
 
 class ProjectController extends Controller
@@ -34,7 +36,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view("admin.projects.create", compact("types"));
+        $technologies = Technology::all();
+        return view("admin.projects.create", compact("types", "technologies"));
     }
 
     /**
@@ -52,6 +55,10 @@ class ProjectController extends Controller
         //Genero lo slug dal name_prog del progetto
         $project->slug = Str::slug($project->name_prog);
         $project->save();
+
+        if (Arr::exists($data, "technologies"))
+            $project->technologies()->attach($data["technologies"]);
+
         return redirect()->route("admin.projects.show", $project);
     }
 
@@ -75,7 +82,11 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view("admin.projects.edit", compact("project", "types"));
+        $technologies = Technology::all();
+
+        $tech_ids = $project->technologies->pluck("id")->toArray();
+
+        return view("admin.projects.edit", compact("project", "types", "technologies", "tech_ids"));
     }
 
     /**
@@ -92,6 +103,13 @@ class ProjectController extends Controller
         $project->fill($data);
         $project->slug = Str::slug($project->name_prog);
         $project->save();
+
+        if (Arr::exists($data, "technologies")) {
+            $project->technologies()->sync($data["technologies"]);
+        } else {
+            $project->technologies()->detach();
+        }
+
         return redirect()->route('admin.projects.show', $project);
     }
 
@@ -103,6 +121,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        //Best practis
+        $project->technologies()->detach();
+
         $project->delete();
         return redirect()->route('admin.projects.index');
     }

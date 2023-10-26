@@ -18,6 +18,7 @@
                 <th scope="col">Nome progetto</th>
                 <th scope="col">Nome della repo</th>
                 <th scope="col">Parte sviluppata</th>
+                <th scope="col">Tecnologia</th>
                 <th scope="col">Slug</th>
                 <th scope="col">Created at</th>
                 <th scope="col">Updated at</th>
@@ -31,17 +32,17 @@
                     <th scope="row">{{ $project->id }}</th>
                     <td>{{ $project->name_prog }}</td>
                     <td>{{ $project->repo }}</td>
-                    <td>{{ $project->type?->developed_part }}
-                        - {{ $project->type?->id }}</td>
+                    <td>{{ $project->type?->developed_part }}</td>
+                    <td>{!! $project->getTechBadges() !!}</td>
                     <td>{{ $project->slug }}</td>
                     <td>{{ $project->created_at }}</td>
                     <td>{{ $project->updated_at }}</td>
-                    <td>
+                    <td class="col-1">
                         <a href="{{ route('admin.projects.show', $project) }}"><i
                                 class="fa-solid text-primary fa-eye"></i></a>
 
                         <a href="{{ route('admin.projects.edit', $project) }}"><i
-                                class="fa-solid text-warning fa-pen-to-square px-2"></i></a>
+                                class="fa-solid text-warning fa-pen-to-square px-1"></i></a>
 
                         <!-- Button trigger modal -->
                         <a href="#" type="button" data-bs-toggle="modal"
