@@ -19,7 +19,6 @@
                 <th scope="col">Nome della repo</th>
                 <th scope="col">Parte sviluppata</th>
                 <th scope="col">Tecnologia</th>
-                <th scope="col">Slug</th>
                 <th scope="col">Created at</th>
                 <th scope="col">Updated at</th>
                 <th scope="col">D-T-M</th>
@@ -33,8 +32,7 @@
                     <td>{{ $project->name_prog }}</td>
                     <td>{{ $project->repo }}</td>
                     <td>{{ $project->type?->developed_part }}</td>
-                    <td>{!! $project->getTechBadges() !!}</td>
-                    <td>{{ $project->slug }}</td>
+                    <td class="col-2">{!! $project->getTechBadges() !!}</td>
                     <td>{{ $project->created_at }}</td>
                     <td>{{ $project->updated_at }}</td>
                     <td class="col-1">
