@@ -50,7 +50,7 @@
                     </td>
                 </tr>
 
-            @empty <h4>Non ci sono progetti</h4>
+            @empty <h4 class="my-5">Non ci sono progetti</h4>
             @endforelse
         </tbody>
     </table>
@@ -61,7 +61,7 @@
         <h5>*Leggenda D-T-M</h5>
         <span>Mostra i dettagli del Progetto: <i class="fa-solid text-primary fa-eye"></i></span>
         <span>Modifica un Progetto: <i class="fa-solid text-warning fa-pen-to-square px-2"></i></span>
-        <span>Elimina un Progetto: <i class="fa-solid text-danger fa-trash-can"></i></span>
+        <span>Sposta nel Cestino un Progetto: <i class="fa-solid text-danger fa-trash-can"></i></span>
 
     </div>
 @endsection

@@ -20,7 +20,7 @@
                 <th scope="col">Parte sviluppata</th>
                 <th scope="col">Tecnologia</th>
                 <th scope="col">Cestinato il</th>
-                <th scope="col">D-T-M</th>
+                <th scope="col">D-R</th>
             </tr>
         </thead>
 
@@ -33,12 +33,11 @@
                     <td>{{ $project->type?->developed_part }}</td>
                     <td class="col-2">{!! $project->getTechBadges() !!}</td>
                     <td>{{ $project->deleted_at }}</td>
-                    <td class="col-1">
-                        <a href="{{ route('admin.projects.show', $project) }}"><i
-                                class="fa-solid text-primary fa-eye"></i></a>
+                    <td class="col">
 
-                        <a href="{{ route('admin.projects.edit', $project) }}"><i
-                                class="fa-solid text-warning fa-pen-to-square px-1"></i></a>
+                        <a href="#" type="button" data-bs-toggle="modal"
+                            data-bs-target="#restore-modal-{{ $project->id }}"><i
+                                class="fa-solid text-success fa-reply mx-1"></i></a>
 
                         <!-- Button trigger modal -->
                         <a href="#" type="button" data-bs-toggle="modal"
@@ -47,7 +46,7 @@
                     </td>
                 </tr>
 
-            @empty <h4>Non ci sono progetti</h4>
+            @empty <h4 class="my-5">Non ci sono progetti nel cestino</h4>
             @endforelse
         </tbody>
     </table>
@@ -55,9 +54,8 @@
     {{ $projects->links('pagination::bootstrap-5') }}
 
     <div class="d-flex flex-column">
-        <h5>*Leggenda D-T-M</h5>
-        <span>Mostra i dettagli del Progetto: <i class="fa-solid text-primary fa-eye"></i></span>
-        <span>Modifica un Progetto: <i class="fa-solid text-warning fa-pen-to-square px-2"></i></span>
+        <h5>*Leggenda D-R</h5>
+        <span>Ripristina un Progetto: <i class="fa-solid text-success fa-reply"></i></span>
         <span>Elimina un Progetto: <i class="fa-solid text-danger fa-trash-can"></i></span>
 
     </div>
@@ -84,11 +82,39 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
 
-                        {{-- NON FUNZIONA --}}
                         <form action="{{ route('admin.projects.trash.force-destroy', $project->id) }}" method="POST">
                             @method('DELETE')
                             @csrf
                             <button class="btn btn-danger">Elimina</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Restore-->
+        <div class="modal fade" id="restore-modal-{{ $project->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModal"> Se sicuro di ripristinare
+                            questo progetto?
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <span>Progetto numero: </span> {{ $project->id }} <br>
+                        <span>Nome del progetto: </span>
+                        {{ $project->name_prog }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+
+                        <form action="{{ route('admin.projects.trash.restore', $project) }}" method="POST">
+                            @method('PATCH')
+                            @csrf
+                            <button class="btn btn-success">Ripristino</button>
                         </form>
                     </div>
                 </div>

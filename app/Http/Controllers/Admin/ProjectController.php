@@ -155,18 +155,22 @@ class ProjectController extends Controller
 
         return redirect()->route("admin.projects.trash.index", compact("projects"));
 
-        /*  Project $project, Request $request 
-           if ($project->trashed()) {
+    }
 
-                $project->forceDelete();
-                return redirect()->route("admin.projects.trash.index");
-            }
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * return \Illuminate\Http\Response
+     */
 
-            $project->forceDelete();
-            return redirect()->route("admin.projects.trash.index");
-    */
-        //   $project = Project::findOrFail($project->id);
-        //  $project->forceDelete();
+    public function restore(int $id)
+    {
+        $project = Project::onlyTrashed()->findOrFail($id);
+
+        $project->restore();
+
+        return redirect()->route("admin.projects.trash.index");
 
     }
 }
