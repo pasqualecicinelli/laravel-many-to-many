@@ -74,8 +74,8 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModal"> Vuoi eliminare
-                            questo progetto?
+                        <h1 class="modal-title fs-5" id="exampleModal"> Vuoi spostare
+                            questo progetto nel cestino?
                         </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>

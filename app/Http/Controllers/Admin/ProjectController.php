@@ -114,19 +114,23 @@ class ProjectController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Soft delete the specified resource from storage.
      *
      * @param  int  $id
      * return \Illuminate\Http\Response
      */
     public function destroy(Project $project)
     {
-        //Best practis
-        $project->technologies()->detach();
 
         $project->delete();
         return redirect()->route('admin.projects.index');
     }
+
+    /**
+     * Display Trash "Cestino" a listing of the resource.
+     *
+     * return \Illuminate\Http\Response
+     */
     public function trash()
     {
         //Paginate di 5 elem per pagina più ordinamento decrescente
@@ -134,20 +138,35 @@ class ProjectController extends Controller
         return view("admin.projects.trash.index", compact("projects"));
     }
 
-    public function forceDelete(Project $project, Request $request)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * return \Illuminate\Http\Response
+     */
+
+    public function forceDestroy(int $id)
     {
-        if ($project->trashed()) {
+        $project = Project::onlyTrashed()->findOrFail($id);
+
+        //Best practis
+        $project->technologies()->detach();
+        $project->forceDelete();
+
+        return redirect()->route("admin.projects.trash.index", compact("projects"));
+
+        /*  Project $project, Request $request 
+           if ($project->trashed()) {
+
+                $project->forceDelete();
+                return redirect()->route("admin.projects.trash.index");
+            }
 
             $project->forceDelete();
             return redirect()->route("admin.projects.trash.index");
-        }
-
-        $project->delete();
-        return redirect()->route("admin.projects.trash.index");
-
+    */
         //   $project = Project::findOrFail($project->id);
         //  $project->forceDelete();
 
-        // return redirect()->route("admin.projects.trash.index", compact("projects"));
     }
 }

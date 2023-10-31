@@ -19,8 +19,7 @@
                 <th scope="col">Nome della repo</th>
                 <th scope="col">Parte sviluppata</th>
                 <th scope="col">Tecnologia</th>
-                <th scope="col">Created at</th>
-                <th scope="col">Updated at</th>
+                <th scope="col">Cestinato il</th>
                 <th scope="col">D-T-M</th>
             </tr>
         </thead>
@@ -33,8 +32,7 @@
                     <td>{{ $project->repo }}</td>
                     <td>{{ $project->type?->developed_part }}</td>
                     <td class="col-2">{!! $project->getTechBadges() !!}</td>
-                    <td>{{ $project->created_at }}</td>
-                    <td>{{ $project->updated_at }}</td>
+                    <td>{{ $project->deleted_at }}</td>
                     <td class="col-1">
                         <a href="{{ route('admin.projects.show', $project) }}"><i
                                 class="fa-solid text-primary fa-eye"></i></a>
@@ -73,7 +71,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModal"> Vuoi eliminare
+                        <h1 class="modal-title fs-5" id="exampleModal"> Se veramente sicuro di eliminare
                             questo progetto?
                         </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -87,7 +85,7 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
 
                         {{-- NON FUNZIONA --}}
-                        <form action="{{ route('admin.projects.trash.force-delete', $project->id) }}" method="POST">
+                        <form action="{{ route('admin.projects.trash.force-destroy', $project->id) }}" method="POST">
                             @method('DELETE')
                             @csrf
                             <button class="btn btn-danger">Elimina</button>
