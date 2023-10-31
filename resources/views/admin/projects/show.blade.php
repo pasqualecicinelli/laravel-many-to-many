@@ -21,7 +21,6 @@
         <div class="col-4">
             <h5>Parte sviluppata</h5>
             <span>{{ $project->type ? $project->type->developed_part : 'Non eiste una parte sviluppata' }}</span>
-            - {{ $project->type?->id }}
 
         </div>
 

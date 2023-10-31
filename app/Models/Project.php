@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
-    use HasFactory;
-
+    use HasFactory, SoftDeletes;
     protected $fillable = ["name_prog", "repo", "link", "description", "type_id"];
+
+    protected $dates = ["deleted_at"];
 
     public function type()
     {
@@ -29,4 +31,6 @@ class Project extends Model
         }
         return $badges_html;
     }
+
+
 }

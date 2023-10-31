@@ -114,17 +114,63 @@ class ProjectController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Soft delete the specified resource from storage.
      *
      * @param  int  $id
      * return \Illuminate\Http\Response
      */
     public function destroy(Project $project)
     {
-        //Best practis
-        $project->technologies()->detach();
 
         $project->delete();
         return redirect()->route('admin.projects.index');
+    }
+
+    /**
+     * Display Trash "Cestino" a listing of the resource.
+     *
+     * return \Illuminate\Http\Response
+     */
+    public function trash()
+    {
+        //Paginate di 5 elem per pagina più ordinamento decrescente
+        $projects = Project::onlyTrashed()->orderByDesc("id")->paginate(5);
+        return view("admin.projects.trash.index", compact("projects"));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * return \Illuminate\Http\Response
+     */
+
+    public function forceDestroy(int $id)
+    {
+        $project = Project::onlyTrashed()->findOrFail($id);
+
+        //Best practis
+        $project->technologies()->detach();
+        $project->forceDelete();
+
+        return redirect()->route("admin.projects.trash.index", compact("projects"));
+
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * return \Illuminate\Http\Response
+     */
+
+    public function restore(int $id)
+    {
+        $project = Project::onlyTrashed()->findOrFail($id);
+
+        $project->restore();
+
+        return redirect()->route("admin.projects.trash.index");
+
     }
 }
