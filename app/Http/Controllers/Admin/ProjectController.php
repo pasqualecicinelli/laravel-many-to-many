@@ -127,4 +127,27 @@ class ProjectController extends Controller
         $project->delete();
         return redirect()->route('admin.projects.index');
     }
+    public function trash()
+    {
+        //Paginate di 5 elem per pagina più ordinamento decrescente
+        $projects = Project::onlyTrashed()->orderByDesc("id")->paginate(5);
+        return view("admin.projects.trash.index", compact("projects"));
+    }
+
+    public function forceDelete(Project $project, Request $request)
+    {
+        if ($project->trashed()) {
+
+            $project->forceDelete();
+            return redirect()->route("admin.projects.trash.index");
+        }
+
+        $project->delete();
+        return redirect()->route("admin.projects.trash.index");
+
+        //   $project = Project::findOrFail($project->id);
+        //  $project->forceDelete();
+
+        // return redirect()->route("admin.projects.trash.index", compact("projects"));
+    }
 }

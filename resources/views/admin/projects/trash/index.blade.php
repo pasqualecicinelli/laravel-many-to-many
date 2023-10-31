@@ -7,10 +7,9 @@
 @endsection
 
 @section('content')
-    <a href="{{ route('admin.projects.create') }}" role="button" class="btn btn-primary">Crea Progetto</a>
-    <a href="{{ route('admin.projects.trash.index') }}" role="button" class="btn btn-primary">Vai al Cestino</a>
+    <a href="{{ route('admin.projects.index') }}" role="button" class="btn btn-primary">Torna indietro</a>
 
-    <h1 class="my-5">Lista dei Progetti</h1>
+    <h1 class="my-5">Lista dei Progetti Cestinati</h1>
 
     <table class="table">
         <thead>
@@ -36,7 +35,7 @@
                     <td class="col-2">{!! $project->getTechBadges() !!}</td>
                     <td>{{ $project->created_at }}</td>
                     <td>{{ $project->updated_at }}</td>
-                    <td>
+                    <td class="col-1">
                         <a href="{{ route('admin.projects.show', $project) }}"><i
                                 class="fa-solid text-primary fa-eye"></i></a>
 
@@ -87,7 +86,8 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
 
-                        <form action="{{ route('admin.projects.destroy', $project) }}" method="POST">
+                        {{-- NON FUNZIONA --}}
+                        <form action="{{ route('admin.projects.trash.force-delete', $project->id) }}" method="POST">
                             @method('DELETE')
                             @csrf
                             <button class="btn btn-danger">Elimina</button>

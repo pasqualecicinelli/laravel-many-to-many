@@ -18,6 +18,7 @@ class ProjectSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
+        //Uso config per prendere i dati "array" dalla cartella config i file in projects.php
         $_projects = config("projects");
 
         $type_ids = Type::all()->pluck("id");

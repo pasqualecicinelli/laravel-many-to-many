@@ -32,6 +32,11 @@ Route::middleware(['auth', 'verified'])
 
     //Nel url stampo lo slug al posto dell'Id
     Route::resource('projects', ProjectController::class)->parameters(['projects' => 'project:slug']);
+
+    //Route soft delete
+    Route::get('projects/trash/index', [ProjectController::class, 'trash'])->name('projects.trash.index');
+    Route::patch('projects/trash/{trash}/restore', [ProjectController::class, 'restore'])->name('projects.trash.restore');
+    Route::delete('projects/trash/{trash}/force-delete', [ProjectController::class, 'forceDelete'])->name('projects.trash.force-delete');
   });
 
 require __DIR__ . '/auth.php';
