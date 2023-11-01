@@ -1,1 +1,8 @@
-@import '~bootstrap/scss/bootstrap'
+@import "~bootstrap/scss/bootstrap";
+
+//non vedo la img h 1:45
+
+img.img-fluid {
+    width: 100px;
+    height: 100px;
+}

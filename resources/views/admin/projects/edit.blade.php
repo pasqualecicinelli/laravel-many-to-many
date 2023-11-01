@@ -15,7 +15,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.projects.update', $project) }}" method="POST">
+    <form action="{{ route('admin.projects.update', $project) }}" method="POST" enctype="multipart/form-data">
 
         @method('PUT')
         @csrf
@@ -60,6 +60,33 @@
                         {{ $message }}
                     </div>
                 @enderror
+            </div>
+        </div>
+
+        <div class="col-12 my-3">
+            <div class="row">
+                <div class="col-8">
+                    <label for="cover_image" class="form-label">Cover dell'immagine</label>
+                    <input type="file" name="cover_image" id="cover_image"
+                        class="form-control @error('cover_image') is-invalid @enderror" value="{{ old('cover_image') }}">
+                    @error('cover_image')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
+                <div class="col-4">
+
+                    @if ($project->cover_image)
+                        <span
+                            class="position-absolute top-0 start-100 translate-middle badge bg-danger delete-image-button">
+                            <i class="fa-solid text-danger fa-trash-can" id="delete-image-button"></i>
+                            <span class="visually-hidden">delete image</span>
+                        </span>
+                    @endif
+                    <img src="{{ asset('/storage/' . $project->cover_image) }}" class="img-fluid" id="cover-image-preview">
+                </div>
             </div>
         </div>
 
@@ -121,6 +148,44 @@
         <button type="submit" class="btn btn-success">Salva</button>
         <a href={{ route('admin.projects.index') }} class="btn btn-primary my-3">Indietro</a>
 
-
     </form>
+
+    @if ($project->cover_image)
+        <form method="POST" action="{{ route('admin.projects.delete-image', $project) }}" id="delete-image-form">
+            @method('DELETE')
+            @csrf
+        </form>
+    @endif
+
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+        const inputFileElem = document.getElementById('cover_image');
+        const coverImagePrew = document.getElementById('cover_image_previw');
+
+        if (!coverImagePrew.getAttribute('src') || coverImagePrew.getAttribute('src')) == "https://placehold.co/400" {
+
+            //Se non abbiamo la cover, mettiamo questa img di default
+            coverImagePrew.src = "https://placehold.co/400";
+        }
+
+        /** Intercettiamo il 'change' e con file generiamo un URL
+         *   questo serve per aggiornare la img di previw
+         */
+        inputFileElem.addEventListner('change', function() {
+            const [file] = this.files;
+            coverImagePrew.src = URL.createObjectUrl(file);
+        })
+    </script>
+
+    @if ($project->cover_image)
+        <script>
+            const deleteImgBtn = document.getElementById('delete-image-button');
+            const deleteImgForm = document.getElementById('delete-image-form');
+            deleteImgBtn.addEventListner('click', function() {
+                deleteImgForm.submit();
+            })
+        </script>
+    @endif
 @endsection

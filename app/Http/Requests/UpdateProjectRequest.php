@@ -26,11 +26,13 @@ class UpdateProjectRequest extends FormRequest
         return [
             'name_prog' => ['required', 'string', 'max:30'],
             'repo' => ['required', 'string', 'max:50'],
-            'link' => ['required', 'url',],
+            'link' => ['required', 'url'],
+            'cover_image' => ['nullable', 'image', 'max:512'],
+            //Grandezza massima del img max:512 kb
+
             'description' => ['nullable', 'string'],
             'type_id' => ['nullable', 'exists:types,id'],
             'technologies' => ['nullable', 'exists:technologies,id'],
-
 
         ];
     }
@@ -48,6 +50,10 @@ class UpdateProjectRequest extends FormRequest
 
             'link.required' => 'Il link è obbligatorio',
             'link.url' => 'Il link deve essere un URL',
+
+            'cover_image.image' => 'Il file deve essere un\'immagine',
+            'cover_image.max' => 'Il file caricato deve avere una dimensione inferiore a 512 KB',
+
 
             'description.string' => 'La descrizione deve essere una stringa',
 

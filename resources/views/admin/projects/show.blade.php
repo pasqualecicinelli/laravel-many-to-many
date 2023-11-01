@@ -43,8 +43,20 @@
         </div>
 
         <div class="col-12">
-            <h5>Descrizione progetto</h5>
-            <span>{{ $project->description }}</span>
+            <div class="row">
+
+
+                <div class="col-4">
+
+                    <img src="{{ asset('/storage/' . $project->cover_image) }}" class="img-fluid" alt="">
+
+                </div>
+
+                <div class="col-8">
+                    <h5>Descrizione progetto</h5>
+                    <span>{{ $project->description }}</span>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
