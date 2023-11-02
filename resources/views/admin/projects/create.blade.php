@@ -145,12 +145,12 @@
 @section('script')
     <script type="text/javascript">
         const inputFileElem = document.getElementById('cover_image');
-        const coverImagePrew = document.getElementById('cover_image_previw');
+        const coverImagePreviw = document.getElementById('cover_image_previw');
 
-        if (!coverImagePrew.getAttribute('src')) {
+        if (!coverImagePreviw.getAttribute('src')) {
 
             //Se non abbiamo la cover, mettiamo questa img di default
-            coverImagePrew.src = "https://placehold.co/400";
+            coverImagePreviw.src = "https://placehold.co/400";
         }
 
         /** Intercettiamo il 'change' e con file generiamo un URL
@@ -158,7 +158,7 @@
          */
         inputFileElem.addEventListner('change', function() {
             const [file] = this.files;
-            coverImagePrew.src = URL.createObjectUrl(file);
+            coverImagePreviw.src = URL.createObjectUrl(file);
         })
     </script>
 @endsection

@@ -176,7 +176,7 @@ class ProjectController extends Controller
 
         $project->forceDelete();
 
-        return redirect()->route("admin.projects.trash.index", compact("projects"));
+        return redirect()->route("admin.projects.trash.index");
 
     }
 
