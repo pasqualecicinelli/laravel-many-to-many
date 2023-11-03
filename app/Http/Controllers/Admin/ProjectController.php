@@ -12,6 +12,7 @@ use App\Models\Technology;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 
 
 class ProjectController extends Controller
@@ -54,6 +55,13 @@ class ProjectController extends Controller
 
         //Genero lo slug dal name_prog del progetto
         $project->slug = Str::slug($project->name_prog);
+
+        if ($request->hasFile("cover_image")) {
+
+            //prendo il path dallo Storage
+            $project->cover_image = Storage::put('uploads/projects/cover_image', $data['cover_image']);
+        }
+
         $project->save();
 
         if (Arr::exists($data, "technologies"))
@@ -102,6 +110,16 @@ class ProjectController extends Controller
         $data = $request->validated();
         $project->fill($data);
         $project->slug = Str::slug($project->name_prog);
+
+
+        if ($request->hasFile("cover_image")) {
+            if ($project->cover_image) {
+                Storage::delete($project->cover_image);
+            }
+            //prendo il path dallo Storage
+            $project->cover_image = Storage::put('uploads/projects/cover_image', $data['cover_image']);
+        }
+
         $project->save();
 
         if (Arr::exists($data, "technologies")) {
@@ -151,9 +169,14 @@ class ProjectController extends Controller
 
         //Best practis
         $project->technologies()->detach();
+
+        if ($project->cover_image) {
+            Storage::delete($project->cover_image);
+        }
+
         $project->forceDelete();
 
-        return redirect()->route("admin.projects.trash.index", compact("projects"));
+        return redirect()->route("admin.projects.trash.index");
 
     }
 
@@ -172,5 +195,13 @@ class ProjectController extends Controller
 
         return redirect()->route("admin.projects.trash.index");
 
+    }
+
+    public function deleteImage(Project $project)
+    {
+        Storage::delete($project->cover_image);
+        $project->cover_image = null;
+        $project->save();
+        return redirect()->back();
     }
 }
