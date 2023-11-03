@@ -27,13 +27,14 @@
         @include('partials._navbar')
 
         <main>
-            <div class="container mt-5">
+            <div class="container my-5">
                 @yield('content')
 
 
             </div>
         </main>
     </div>
+    @yield('script')
     @yield('modals')
 </body>
 

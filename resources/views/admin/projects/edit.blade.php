@@ -35,9 +35,11 @@
         </div>
 
         <div class="col-12 my-3">
-            <label for="repo"><strong>
+            <label for="repo">
+                <strong>
                     Nome della Repo progetto
-                </strong></label>
+                </strong>
+            </label>
             <input class="form-control @error('repo') is-invalid @enderror mt-2" type="text" id="repo"
                 name="repo" placeholder="for ex: repo-nome-progetto" aria-label="default input example"
                 value="{{ old('repo') ?? $project->repo }}">
@@ -51,7 +53,11 @@
         <div class="col-12 my-3">
             <label for="link" class="form-label"></label>
             <div class="input-group">
-                <span class="input-group-text" id="basic-addon3"><strong>Inserisci il link della Repo</strong></span>
+                <span class="input-group-text" id="basic-addon3">
+                    <strong>
+                        Inserisci il link della Repo
+                    </strong>
+                </span>
                 <input type="text" class="form-control @error('link') is-invalid @enderror" name="link" id="link"
                     placeholder="https://example.com/users/" aria-describedby="basic-addon3 basic-addon4"
                     value="{{ old('link') ?? $project->link }}">
@@ -66,7 +72,11 @@
         <div class="col-12 my-3">
             <div class="row">
                 <div class="col-8">
-                    <label for="cover_image" class="form-label">Cover dell'immagine</label>
+                    <label for="cover_image" class="form-label">
+                        <strong>
+                            Cover dell'immagine
+                        </strong>
+                    </label>
                     <input type="file" name="cover_image" id="cover_image"
                         class="form-control @error('cover_image') is-invalid @enderror" value="{{ old('cover_image') }}">
                     @error('cover_image')
@@ -92,7 +102,11 @@
 
         <div class="col-12 my-3">
             <div class="row @error('technologies') is-invalid @enderror">
-                <div class="my-2"><strong>Check le tecnologie</strong></div>
+                <div class="my-2">
+                    <strong>
+                        Check le tecnologie
+                    </strong>
+                </div>
                 @foreach ($technologies as $technology)
                     <div class="col-2 my-2">
                         <input type="checkbox" name="technologies[]" id="technology-{{ $technology->id }}"
@@ -113,7 +127,9 @@
 
         <div class="col-12 my-3">
             <label for="type_id" class="form-label">
-                <strong>Parte da sviluppare</strong>
+                <strong>
+                    Parte da sviluppare
+                </strong>
             </label>
             <select class="form-select  @error('type_id') is-invalid @enderror" type="text" id="type_id"
                 name="type_id">
@@ -133,7 +149,9 @@
 
         <div class="col-12 input-group my-4">
             <span class="input-group-text">
-                <strong>Descrizione</strong>
+                <strong>
+                    Descrizione
+                </strong>
             </span>
             <label for="description" class="form-label"></label>
             <textarea id="description" name="description" class="form-control @error('description') is-invalid @enderror"
